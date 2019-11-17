@@ -1,0 +1,82 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('başlık.ejs', {bot, user, path}) %>
+<div class="container">
+
+	<div class="row justify-content-md-center">
+		<div align="center"><h2 style="color: #fff;"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i> Limitli Ban</h2></div>
+  </div>
+	
+  
+	<div class="row">
+		
+
+
+<div class="col">
+    <div class="container">
+      <form method="post">
+        <ul class="list-group list-group-flush">
+          <div class="row">
+        <div class="col-25">
+          <label for="banci">Bancı Yetkisi</label>
+        </div>
+        <div class="col-75">
+          <% if (bot.ayar.has(`bRol_${guild.id}`) === false) { %>
+          <select style="text-align: left; width:87%;" name="banci" id="banci">
+            <option disabled selected>Lütfen bir rol seçiniz.</option>
+            <% guild.roles.filter(r => r.name !== "@everyone").forEach(r => { %>
+            <option value="<%=r.id%>" style="color:<%=r.hexColor%>"><%=r.name%></option>
+            <% }); %>
+          </select>
+          <a href="/panel/<%=guild.id%>/banci/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+					<% if(bot.ayar.has(`bRol_${guild.id}`) === true) { %>
+          <select style="color:<%=guild.roles.get(bot.ayar.fetch(`bRol_${guild.id}`)).hexColor%>; text-align: left; width:87%;" name="banci" id="banci">
+             <option disabled selected>Lütfen bir rol seçiniz.</option>
+            <option value="<%=bot.ayar.fetch(`bRol_${guild.id}`)%>" style="color:<%=guild.roles.get(bot.ayar.fetch(`bRol_${guild.id}`)).hexColor%>" selected><%=guild.roles.get(bot.ayar.fetch(`bRol_${guild.id}`)).name%></option>
+					 <% guild.roles.filter(r => r.name !== "@everyone").filter(r => r.id !== bot.ayar.fetch(`bRol_${guild.id}`)).forEach(r => { %>
+            <option value="<%=r.id%>" style="color:<%=r.hexColor%>"><%=r.name%></option>
+          <% }); %>
+          </select>
+          <a href="/panel/<%=guild.id%>/banci/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+        </div>
+      </div>
+          
+        <div class="row">
+      <div class="col-25">
+      <label for="banlimit">Ban Limit</label>
+      </div>
+      <div class="col-75">
+        <% if (bot.ayar.has(`banlimitayar_${guild.id}`) === false) { %>
+        <input type="text" style="text-align: left; width:87%;" name="banlimit" id="banlimit"  placeholder="Ban Limitini Yazınız.">
+          <a href="/panel/<%=guild.id%>/banlimit/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+					<% if(bot.ayar.has(`banlimitayar_${guild.id}`) === true) { %>
+        <input type="text" style="text-align: left; width:87%;" name="banlimit" id="banlimit"  value="<%=bot.ayar.fetch(`banlimitayar_${guild.id}`)%>">
+          <a href="/panel/<%=guild.id%>/banlimit/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+      </div>
+    </div>
+      </div>
+          
+          
+          
+          </ul>
+          <div style="width: 100%; text-align: right; margin-top: 15px;">
+    <button style="background-color:blue; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-fw fa-save" aria-hidden="true"></i> Kaydet</button>
+        <a href="yonet" button style="background-color:orange; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-mail-reply" aria-hidden="true"></i> Geri Dön</button> </a>    </div>
+    
+  </div>
+      </form>
+    </div>
+  </div>
+    
+</div>
+
+
+<script>
+	var ts = parseInt($('#guildCreate').text());
+	$('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);  
+</script>
+<% include footer.ejs %>

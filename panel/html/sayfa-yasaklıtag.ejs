@@ -1,0 +1,153 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<%- include('başlık.ejs', {bot, user, path}) %>
+<div class="container">
+
+	<div class="row justify-content-md-center">
+		<div align="center"><h2 style="color: #fff;"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>Yasaklı Tag Sistemi</h2></div>
+  </div>
+
+  <center><h5 style="color:red">Beta...</h5></center>
+   <center> <h6 style="color: #fff; margin: 5px;"><a style="color:aqua">Yasaklı Tag Sistemi Nedir ? </a><br> Yasaklı Tag Sistemi Yasakladığınız Tag'a Sahip Bir Kullanıcı Sunucunuza girdiğinde otomatik Olarak O Kullnaıcıyı Yasaklar<br></h6></center>
+	 <center> <h6 style="color: #fff; margin: 5px;"><a style="color:red">Not: </a> O Taga Sahip Kullanıcı Sunucunuzda Varsa O Kullnaıcıyı Yasaklamaz<br><br></h6></center>
+  <center> <h6 style="color: #fff; margin: 5px;"><a style="color:red">Not: </a> Panelden Tag Ekliyemiyorsanız <a style="color:green">i!yasak-tag-ekle</a> Komutuyla Ekleyin 1 Kere Ekledikten Sonra Hata Düzelir<br><br></h6></center>
+
+  <div class="row">
+		
+
+<div class="col">
+    <div class="container">
+      <form method="post">
+        <ul class="list-group list-group-flush">
+  
+   <div class="row">
+      <div class="col-25">
+          <label for="tagyasakaktif">Yasaklı Tag Sistemi</label>
+      </div>
+      <div class="col-75">
+        <% if (bot.ayar.has(`tTagSistem_${guild.id}`) === false) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="tagyasakaktif" name="tagyasakaktif" value="aktif">
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+					<% if(bot.ayar.has(`tTagSistem_${guild.id}`) === true) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="tagyasakaktif" name="tagyasakaktif" value="Kapalı" checked>
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+      </div>
+    </div>
+
+
+
+
+<div class="row">
+        <div class="col-25">
+          <label for="taguyarı">Tag Uyarı kanalı</label>
+        </div>
+        <div class="col-75">
+          <% if (bot.ayar.has(`ytagKanak_${guild.id}`) === false) { %>
+          <select style="text-align: left; width:87%;" name="taguyarı" id="taguyarı">
+            <option disabled selected>Lütfen bir kanal seçiniz.</option>
+            <% guild.channels.filter(c => c.type === "text").forEach(c => { %>
+            <option value="<%=c.id%>">#<%=c.name%></option>
+            <% }); %>
+          </select>
+          <a href="/panel/<%=guild.id%>/taguyari/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+					<% if(bot.ayar.has(`ytagKanak_${guild.id}`) === true) { %>
+          <select style="text-align: left; width:87%;" name="taguyarı" id="taguyarı">
+            <option value="<%=bot.ayar.fetch(`ytagKanak_${guild.id}`)%>"><%=guild.channels.get(bot.ayar.fetch(`ytagKanak_${guild.id}`)).name%></option>
+					 <% guild.channels.filter(c => c.type === "text").filter(c => c.id !== bot.ayar.fetch(`ytagKanak_${guild.id}`)).forEach(c => { %>
+            <option value="<%=c.id%>">#<%=c.name%></option>
+          <% }); %>
+          </select>
+          <a href="/panel/<%=guild.id%>/taguyari/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+        </div>
+      </div>
+
+
+
+          <div class="row">
+            <div class="col-25">
+              <label for="yasakTag">Yasaklı Tag Sistemi</label>
+            </div>
+            <div class="col-75">
+           
+                
+                
+                <input type="text" id="yasakTag" name="yasakTag" placeholder="Yasaklı Tag eklenecek Tag'ı yazınız."> 
+                
+              <div id="demo"></div>
+                
+             
+         
+            
+            </div>
+            
+          
+            
+            <button style="background-color:orange; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-fw fa-save" aria-hidden="true"></i> Tag Ekle</button>    
+          </div>
+          
+         
+          
+          <br>
+          <%if(bot.ayar.fetch(`yTaglar_${guild.id}`) === null || bot.ayar.fetch(`yTaglar_${guild.id}`).length <= 0) {%>
+      
+               <h5 align="center" style="color:#fff">
+                    Yasaklı Tag hiç kelime eklenmemiş.
+              </h5>
+        
+            <%} else {%>
+          
+        
+        
+          <table class="table table-hover" style="background-color:#222">
+            <thead>
+                <tr>
+                  <th scope="col">Kelime</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                    <%for(var i = 0; i < bot.ayar.fetch(`yTaglar_${guild.id}`).length; i++) {%>
+              <%var k = bot.ayar.fetch(`yTaglar_${guild.id}`).includes(i) %>
+              <tr>
+                  <th scope="row"><%=bot.ayar.fetch(`yTaglar_${guild.id}`)[i]%></th>
+            <td><a class="btn btn-danger" href="/panel/<%=guild.id%>/yasakTag/sil/<%=bot.ayar.fetch(`yTaglar_${guild.id}`)[i]%>">Tagı Sil</a></td>
+
+                 </tr>
+
+                  <%}%>
+        
+              <%}%>
+            </tbody>
+        </table>
+
+           </div>
+      </div>
+          
+          
+          
+          </ul>
+          <div style="width: 100%; text-align: right; margin-top: 15px;">
+    <button style="background-color:blue; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-fw fa-save" aria-hidden="true"></i> Kaydet</button>
+        <a href="yonet" button style="background-color:orange; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-mail-reply" aria-hidden="true"></i> Geri Dön</button> </a>    </div>
+    
+  </div>
+      </form>
+    </div>
+  </div>
+    
+</div>
+
+
+<script>
+	var ts = parseInt($('#guildCreate').text());
+	$('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);  
+</script>
+<% include footer.ejs %>

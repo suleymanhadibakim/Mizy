@@ -1,0 +1,108 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="<%=bot.avatarURL%>">
+  <meta name="author" content="<%=bot.user.tag%>">
+  <meta name="keywords" content="Imam-bot">
+  <meta property="og:site_name" value="Imam-Bot">
+  <meta property="og:image" content="https://cdn.discordapp.com/avatars/350576272251813888/748e250f08e416dcb9bc84f394244549.png?size=2048">
+  <meta property="og:description" content="Gelişmiş Türçe Discord Botu Imam-Bot">
+  <meta name="description" content="Gelişmiş Türçe Discord Botu Imam-Bot">
+  <meta name="theme-color" content="#0070fa">
+  <meta charset="UTF-8">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700&amp;subset=latin-ext" rel="stylesheet">
+  <link href="https://bootswatch.com/4/cyborg/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/v/bs4/dt-1.10.16/cr-1.4.1/r-2.2.0/datatables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js" integrity="sha256-zG8v+NWiZxmjNi+CvUYnZwKtHzFtdO8cAKUIdB8+U9I="
+    crossorigin="anonymous"></script>
+
+  <link rel=”shortcut icon” href=”https://cdn.discordapp.com/avatars/350576272251813888/748e250f08e416dcb9bc84f394244549.png?size=2048” />
+	<title>Imam-Bot</title>
+
+  <!-- CSS - Modesta Thanks for AlexFlipnote(https://alexflipnote.xyz) -->
+  <link href="https://modesta.alexflipnote.xyz/css/modesta.min.css" type="text/css" rel="stylesheet">
+  <link href="https://modesta.alexflipnote.xyz/css/blobcat.min.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+
+  <!-- JavaScript -->
+  <script src="https://emirkabal.xyz/modüller/smoothscroll.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://imambot.xyz/modüller/main.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Custom Style -->
+  <style>.one-full.column p,.one-full.column h1 {margin: 0;}</style>
+</head>
+
+<body>
+  <div class="fullscreen">
+    <div class="background" style="background-image: url(https://cdn.glitch.com/88625dc2-7e0a-452b-a301-7ec5db8cc8c2%2Fbackground.jpg?v=1561630003250);"></div>
+    <div class="center-object">
+      <section class="me unset">
+        <img draggable="false" src="https://cdn.discordapp.com/avatars/350576272251813888/748e250f08e416dcb9bc84f394244549.png?size=2048" class="image-title">
+        <h1 class="title">Imam-Bot</h1>
+      </section>
+      <div class="buttons">
+        <a href="https://imam-bot.xyz/anasayfa" class="btn animation hover peter-river"><i class="fas fa-robot"></i>Web Panel</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="container" id="bilgilendirme">
+    <div class="box-container row">
+      <div class="one-full column">
+        <h1 class="gold-text"><i class="emoji "></i>Hakkımda:</h1>
+      </div>
+      <div class="one-full column">
+        <p>
+          Merhaba, Ben <span class="emerald-text">Imam</span>, 3 yıldır Discord platformundayım ve
+          Discord platformunda birçok şey öğrendim
+          ve 2 yıldır Discord BOT ile uğraşıyorum 
+          Bu 2 Yıl İçerisinde<span class="gold-text">Imam-Bot'u</span> Geliştirdim
+        </p>
+      </div>
+    </div>
+
+    <div class="box-container row">
+      <div class="one-full column">
+        <h1 class="emerald-text"><i class="emoji "></i>Sosyal Ağlar:</h1>
+      </div>
+      <div class="one-full column">
+        <a href="https://discord.gg/SyKcVP" onclick="getTag();"  class="btn discord-flat"><i class="fab fa-discord"></i> Discord</a>
+        <a href="https://steamcommunity.com/id/saykoJaho/" onclick="getTag();"  class="btn steam-flat"><i class="fab fa-steam"></i> Steam</a>
+        <a href="https://github.com/ImamTR" onclick="getTag();"  class="btn github-flat"><i class="fab fa-github"></i> Github</a>
+        <a href="https://www.youtube.com/channel/UCOm6NXIxJbWeQzOw8U46oMw" class=" btn youtube-flat" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      </div>
+    </div>
+
+    <div class="box-container row">
+      <div class="one-full column">
+        <h1 class="emerald-text"><i class="emoji "></i>Proje ve Discord Sunucumuz</h1>
+      </div>
+      <div class="one-full column">
+        <p><a href="https://discord.gg/SyKcVP" target="_blank">Kod Paylaşım</a>, Discord.js Kot Paylaşım</p>
+        <p><a href="https://discordapp.com/oauth2/authorize?client_id=538370487932420096&scope=bot&permissions=805314622" target="_blank">Imam-Bot</a>, Türkiye'nin en güvenli botu.</p>
+      </div>
+    </div>
+
+
+  </section>
+  
+  <script>
+    function getTag(){
+        if(!data || !data.discord) return alert("Imam#8385");
+        return alert(data.discord);
+
+  </script>
+
+</body>
+</html>

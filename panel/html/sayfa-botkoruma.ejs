@@ -1,0 +1,147 @@
+<!--HEADER-->
+<%- include('başlık.ejs', {bot, user, path}) %>
+
+      
+
+  <!-- HEADER -->
+ 
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<div class="container">
+
+	<div class="row justify-content-md-center">
+	<div align="center"><h2 style="color: #fff;"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i>Yönetici Bot Koruma Sistemi</h2></div>
+  </div>
+	
+  <!--<center><h7 style="color:red">Bakımda...</h7></center>-->
+  
+   <center> <h6 style="color: #fff; margin: 5px;">Bot Koruma Sistemi: Sunucuya Sizden Habersiz <a style="color:darkred"> Yönetici</a> Bot Eklendiği Zaman <a style="color:green">Uyarı Kanalına</a> Mesaj Gönderir <br><br></h6></center>
+   <center> <h6 style="color: #fff; margin: 5px;">Oto Ban: Sunucunuza Sizden Habersiz Eklenen<a style="color:darkred"> Yönetici</a> Botları Otomatik Olarak Banlar <br><br></h6></center>
+   <center> <h6 style="color: #fff; margin: 5px;">Kurucu Dm Uyarı: Sunucunuza Sizden Habersiz<a style="color:darkred"> Yönetici</a> Bot Eklendiği Zaman Sunucu Kurucusunu Özel Mesajlardan Uyarır <br><br></h6></center>
+
+  
+	<div class="row">
+    
+<div class="col">
+    <div class="container">
+      <form method="post">
+        <ul class="list-group list-group-flush">
+          
+  
+    
+     <div class="row">
+      <div class="col-25">
+          <label for="botko">Bot Koruma Sistemi</label>
+      </div>
+      <div class="col-75">
+        <% if (bot.ayar.has(`botkoruma_${guild.id}`) === false) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="botko" name="botko" value="Aktif">
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+					<% if(bot.ayar.has(`botkoruma_${guild.id}`) === true) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="botko" name="botko" value="Kapalı" checked>
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-25">
+          <label for="kban">Oto Ban</label>
+      </div>
+      <div class="col-75">
+        <% if (bot.ayar.has(`botkorumaban_${guild.id}`) === false) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="kban" name="kban" value="Aktif">
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+					<% if(bot.ayar.has(`botkorumaban_${guild.id}`) === true) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="kban" name="kban" value="deaktif" checked>
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+      </div>
+  </div>
+  		<div class="row">
+       <div class="col-25">
+<label for="owneruyar">Kurucu Dm Uyarı</label>
+      </div>
+      <div class="col-75">
+        <% if (bot.ayar.has(`botkorumauyarı_${guild.id}`) === false) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="owneruyar" name="owneruyar" value="Aktif">
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+					<% if(bot.ayar.has(`botkorumauyarı_${guild.id}`) === true) { %>
+        <label style="margin-right:80%;" class="switch">
+         <input type="checkbox" id="owneruyar" name="owneruyar" value="Kapalı" checked>
+         <span class="slider round"></span>
+        </label>
+          <% } %>
+      </div>
+    </div>	
+    
+  </div> 
+       <div class="row">
+        <div class="col-25">
+          <label for="botkuyarik">Uyarı kanalı</label>
+        </div>
+        <div class="col-75">
+          <% if (bot.ayar.has(`botkuyarı_${guild.id}`) === false) { %>
+          <select style="text-align: left; width:87%;" name="botkuyarik" id="botkuyarik">
+            <option disabled selected>Lütfen bir kanal seçiniz.</option>
+            <% guild.channels.filter(c => c.type === "text").forEach(c => { %>
+            <option value="<%=c.id%>">#<%=c.name%></option>
+            <% }); %>
+          </select>
+          <a href="/panel/<%=guild.id%>/botkuyarik/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+					<% if(bot.ayar.has(`botkuyarı_${guild.id}`) === true) { %>
+          <select style="text-align: left; width:87%;" name="botkuyarik" id="botkuyarik">
+            <option value="<%=bot.ayar.fetch(`botkuyarı_${guild.id}`)%>"><%=guild.channels.get(bot.ayar.fetch(`botkuyarı_${guild.id}`)).name%></option>
+					 <% guild.channels.filter(c => c.type === "text").filter(c => c.id !== bot.ayar.fetch(`botkuyarı_${guild.id}`)).forEach(c => { %>
+            <option value="<%=c.id%>">#<%=c.name%></option>
+          <% }); %>
+          </select>
+          <a href="/panel/<%=guild.id%>/botkuyarik/sifirla" class="reset-btn" role="button">Sıfırla</a>
+          <% } %>
+        </div>
+      </div>         
+ 
+          </ul>
+
+          <div style="width: 100%; text-align: right; margin-top: 15px;">
+      <button style="background-color:blue; color:#fff" type="sumbit" id="formbtn" class="btn btn-default" ><i class="fa fa-fw fa-save" aria-hidden="true"></i> Kaydet</button>
+      <a href="yonet" button style="background-color:orange; color:#fff" type="sumbit" id="formbtn" class="btn btn-default"><i class="fa fa-mail-reply" aria-hidden="true"></i> Geri Dön</button> </a>    </div>
+
+            
+            
+          </div>
+      </form>
+  </div>
+    
+</div>
+
+     
+  
+<script>
+	var ts = parseInt($('#guildCreate').text());
+	$('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);  
+  
+  
+ 
+  
+  
+  
+  
+</script>
+
+<%- include('footer.ejs', {bot, user, path}) %>
