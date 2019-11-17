@@ -2,11 +2,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 exports.run = (client, message) => {
-
-var url = "https://discordapp.com/oauth2/authorize?client_id=350576272251813888&scope=bot&permissions=2146794943"
-var url2 = "https://discordbots.org/bot/350576272251813888"
-var url3 = "QJZEEgv"
-
   if (message.channel.type !== 'dm') {
     const ozelmesajkontrol = new Discord.RichEmbed()
     .setColor(0x00AE86)
@@ -18,20 +13,20 @@ var url3 = "QJZEEgv"
     .setColor(0x00AE86)
     .setTimestamp()
     .setAuthor(message.author.username, message.author.avatarURL)
-    .addField("Linkler",   "[Bot Davet Linki](https://discordapp.com/oauth2/authorize?client_id=350576272251813888&scope=bot&permissions=2146794943) | [DBL Oy](https://discordbots.org/bot/350576272251813888/vote) | [Kod Paylaşım Sunucusu](https://discord.gg/UvteuDd)")
+    .setDescription('https://discord.gg/fxBHEBK');
     return message.author.sendEmbed(pingozel)
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['botu ekle', 'botu davet et', 'botuekle', 'invite'],
-      kategori: "bot",
+  aliases: [],
+      kategori: "kullanıcı",
   permLevel: 0
 };
 
 exports.help = {
-  name: 'davet',
-  description: 'Botun davet linkini gönderir.',
-  usage: 'davet'
+  name: 'desteksunucusu',
+  description: 'Botun Destek Sunucusunu Atar',
+  usage: 'davetsunucusu'
 };

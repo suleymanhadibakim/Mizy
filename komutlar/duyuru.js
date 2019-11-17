@@ -1,25 +1,33 @@
 const Discord = require('discord.js');
+const db = require('quick.db');
 
-exports.run = (client, message, args) => {
-	let mesaj = args.slice(0).join(' ');
-	if (mesaj.length < 1) return message.reply('Yazmam İçin Birşey Yazmalısın!');
-    message.delete();
-    const embed = new Discord.RichEmbed()
-    .setAuthor('')
-    .setColor(3447003)
-    .setDescription(`${mesaj}`)
-    return message.channel.sendEmbed(embed);
+exports.run = async(client, message, args) => {
+   let mesaj = args.slice(0).join(' ');
+   
+   let dk = await db.fetch(`dk_${message.guild.id}`)    
+   let kanal = client.channels.get(dk)
+   if (!mesaj) return message.channel.send("Ne Duyurusu Yapacağınıda Yaz Bari")
+   //  if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(':no_entry: Duyuru Yapabilmek İçin `Yönetici` Yetkisine Sahip Olmakn Gerekli')     
+   if (db.has(`dk_${message.guild.id}`) != true) { return message.channel.send("Duyuru Kanalı Ayarlamamışsın ayarlamak İçin `i!duyuru-kanal #kanal`"); }
+   
+let embed = new Discord.RichEmbed()
+.setDescription(mesaj)
+.setColor("BLUE")
+
+kanal.send("@everyone", embed)
+message.reply("Duyuru Başarıyla Yapıldı")
 };
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ['duyuryap', 'duyur'],
-  permLevel: 2
+ enabled: true,
+ guildOnly: false,
+ aliases: ["duyur"],
+ kategori: "moderasyon",
+ permLevel: 4
 };
 
 exports.help = {
-  name: 'duyuru',
-  description: 'Güzel Bir Duyuru Görünümü Sağlar.',
-  usage: 'duyuru [Duyuruda Yazıcak Şey]'
+ name: 'duyuru',
+ description: "Ayarladığınız duyuru Kanalında duyuru Yapar",
+ usage: ""
 };

@@ -1,28 +1,77 @@
-const Discord = require("discord.js");
-const moment = require("moment");
-require("moment-duration-format");
+const commando = require('discord.js-commando');
+const Discord = require('discord.js');
+const moment = require('moment');
+const os = require('os');
+const { stripIndents } = require('common-tags');
+require('moment-duration-format');
 
-exports.run = (client, msg) => {
-  const duration = moment.duration(client.uptime).format(" D [gün], H [saat], m [dakika], s [saniye]");
-  msg.channel.sendCode("asciidoc", `HyperSquad İstatistikler
-• Bellek kullanımı :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
-• Çalışma süresi   :: ${duration}
-• Kullanıcılar     :: ${client.guilds.reduce((a, b) => a + b.memberCount, 0).toLocaleString()}
-• Sunucular        :: ${client.guilds.size.toLocaleString()}
-• Kanallar         :: ${client.channels.size.toLocaleString()}
-• Discord.JS sürüm :: v${Discord.version}
-• Ping             :: ${client.ping}`);
+exports.run = async (bot, msg, args) => {
+var message = await msg.channel.send('İstatikler alınıyor...')
+
+		var osType = await os.type();
+
+		if (osType === 'Darwin') osType = 'macOS'
+		else if (osType === 'Windows') osType = 'Windows'
+		else osType = os.type();
+    let botping = new Date() - message.createdAt;
+
+		var embed = {
+			color: 3447003,
+			description: '**İstatistikler**',
+			fields: [
+				{
+					name: '❯ Sunucu işletim sistemi',
+					value: `${osType}`,
+					inline: false
+				},
+				{
+					name: '❯ Bellek kullanımı',
+					value: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`,
+					inline: false
+				},
+        {
+					name: '❯ Ping',
+					value: stripIndents`
+         	• Bot Ping: ${Math.floor(botping)}ms
+					• Api Ping: ${bot.ping}ms
+         `,
+					inline: false
+				},
+				{
+					name: '❯ Genel istatistikler',
+					value: stripIndents`
+					• Sunucu: ${bot.guilds.size}
+					• Kanal: ${bot.channels.size}
+					• Kullanıcı: ${bot.guilds.reduce((p, c) => p + c.memberCount, 0)}
+					`,
+					inline: false
+				},
+				{
+					name: '❯ Sürümler',
+					value: stripIndents`
+					• Bot:  ${bot.ayarlar.version}
+					• Discord.js: v${Discord.version}
+					• Discord.js-commando: v${commando.version}
+					• Node: ${process.version}
+					`,
+					inline: false
+				}
+			],
+			thumbnail: { url: bot.user.avatarURL }
+		};
+		
+		return message.edit('', {embed});
+
 };
-
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ['bot durum', 'i', 'bi', 'istatistikler', 'kullanımlar', 'botdurum', 'bd', 'istatisik', 'stats', 'stat'],
-  permLevel: 0
-};
+    enabled: true,
+    guildOnly: true,
+    aliases: ["i"],
+    permLevel: 0
+}
 
 exports.help = {
-  name: 'istatistik',
-  description: 'Botun istatistik gösterir.',
-  usage: 'istatistik'
-};
+    name: 'istatistik',
+    description: 'Botun İstatistiklerini Gösterir',
+    usage: ""
+}

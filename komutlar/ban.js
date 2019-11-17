@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
+const db = require("quick.db")
 const client = new Discord.Client();
 
-exports.run = (client, message, args) => {
-  if (!message.guild) {
+exports.run = async (client, message, args) => {
+ if (!message.guild) {
   const ozelmesajuyari = new Discord.RichEmbed()
   .setColor(0xFF0000)
   .setTimestamp()
@@ -12,8 +13,8 @@ exports.run = (client, message, args) => {
   let guild = message.guild
   let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
-  let modlog = guild.channels.find('name', 'mod-log');
-  if (!modlog) return message.reply('`mod-log` kanalını bulamıyorum.');
+  let modlog = await db.fetch(`membermodChannel_${message.guild.id}`)
+  if (!modlog) return message.channel.send("Mod-log Ayarlanmaış ayarlamak İçin `i!modlog #kanal`")  
   if (reason.length < 1) return message.reply('Ban sebebini yazmalısın.');
   if (message.mentions.users.size < 1) return message.reply('Kimi banlayacağını yazmalısın.').catch(console.error);
 
@@ -23,22 +24,24 @@ exports.run = (client, message, args) => {
   const embed = new Discord.RichEmbed()
     .setColor(0x00AE86)
     .setTimestamp()
-    .addField('Eylem:', 'Sunucudan Yasaklama :bangbang: ')
-    .addField('Yasaklanan Kullanıcı:', `${user.username}#${user.discriminator} (${user.id})`)
-    .addField('Yasaklayan Yetkili:', `${message.author.username}#${message.author.discriminator}`)
-    .addField('Yasaklama Sebebi:', reason);
-  return guild.channels.get(modlog.id).sendEmbed(embed);
+    .addField('Eylem:', 'Ban')
+    .addField('Kullanıcı:', `${user.username}#${user.discriminator} (${user.id})`)
+    .addField('Yetkili:', `${message.author.username}#${message.author.discriminator}`)
+    .addField('Sebep', reason);
+    message.channel.send(`${user.tag} İsimli Kullanıcıyı Başarıyla Sunucudan Yasakladım`)
+  return client.channels.get(modlog).sendEmbed(embed);
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: 2
+      kategori: "moderasyon",
+  permLevel: 3
 };
 
 exports.help = {
   name: 'ban',
-  description: 'İstediğiniz kişiyi sunucudan yasaklar.',
+  description: 'İstediğiniz kişiyi banlar.',
   usage: 'ban [kullanıcı] [sebep]'
 };
